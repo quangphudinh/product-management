@@ -1,0 +1,54 @@
+require('dotenv').config();
+const express = require('express')
+const methodOverride = require('method-override')
+
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const flash = require('express-flash');
+
+
+
+const database = require('./config/database');
+
+const systemConfig = require('./config/system');
+
+const routes = require('./routes/client/index.route');
+const routesAdmin = require('./routes/admin/index.route');
+
+database.connect();
+
+
+const app = express()
+const port = process.env.PORT //lay PORT = 3000
+
+app.use(methodOverride('_method'));
+
+//parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+//publish file
+app.use(express.static(`${__dirname}/public`));
+
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'pug');
+
+// ex flash
+app.use(cookieParser('keyboard random'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+
+
+// Variables Globales
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
+//Routes
+routes(app);
+routesAdmin(app);
+
+
+
+
+app.listen(port , () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+});
