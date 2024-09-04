@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express')
 const methodOverride = require('method-override')
+const path = require('path')
 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -38,6 +39,8 @@ app.use(cookieParser('keyboard random'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
+//TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // Variables Globales
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
