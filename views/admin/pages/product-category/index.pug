@@ -1,14 +1,36 @@
 extends ../../layouts/default.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/formSearch.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
+include ../../mixins/sortCategory.pug
 
 block main
+    +alert-success(5000)
+    h1 Trang Danh Mục Sản Phẩm
 
-    h1 Trang Danh Mục Sản Phẩm          
+    .card.mb-3 
+        .card-header Bộ lọc và Tìm kiếm
+        .card-body
+            .row
+                .col-6
+                   +filter-status(filterStatus) 
+                .col-6
+                    +search(keyword) 
+    .card.mb-3 
+        .card-header Sắp xếp
+        .card-body 
+            .row 
+                .rol-4 
+                    +sortCategory()              
 
     .card.mb-3 
         .card-header Danh mục
         .card-body
             .row 
                 .col-8
+                    +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
                 .col-4 
                     a(
                         href=`${prefixAdmin}/product-category/create`
@@ -70,11 +92,11 @@ block main
                                         ) Dừng hoạt động 
                                 td 
                                     a(
-                                        href=`${prefixAdmin}/product-catagory/detail/${item.id}` 
+                                        href=`${prefixAdmin}/product-category/detail/${item.id}` 
                                         class= 'btn btn-secondary btn-sm'
                                     ) Chi tiết 
                                     a(
-                                        href=`${prefixAdmin}/product-catagory/edit/${item.id}` 
+                                        href=`${prefixAdmin}/product-category/edit/${item.id}` 
                                         class= 'btn btn-warning btn-sm'
                                     ) Sửa 
                                     button(
@@ -82,4 +104,20 @@ block main
                                         button-delete 
                                         data-id = item.id
                                     ) Xóa 
-        
+            +pagination(pagination)
+
+            form(
+                action=""
+                method="POST"
+                id="form-change-status"
+                data-path=`${prefixAdmin}/product-category/change-status`
+            )
+
+            form(
+                action=""
+                method="POST"
+                id="form-delete-item"
+                data-path=`${prefixAdmin}/product-category/delete`
+            ) 
+
+            script(src="/admin/js/product.js") 

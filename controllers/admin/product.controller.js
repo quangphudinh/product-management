@@ -182,13 +182,12 @@ module.exports.editPatch = async (req, res) => {
     req.body.stock = parseInt(req.body.stock);
     req.body.position = parseInt(req.body.position);
     
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
-    const data = req.body;
+    // if (req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`
+    // }
 
     try {
-        await Product.updateOne({ _id: id }, data)
+        await Product.updateOne({ _id: id }, req.body)
         req.flash("success", "Cập nhật sản phẩm thành công!")
     } catch (error) {
         req.flash("error", "Thất bại , hãy thử lại ??")
