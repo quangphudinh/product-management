@@ -173,11 +173,20 @@ module.exports.edit = async (req, res) => {
             deleted: false,
             _id: req.params.id
         }
+    
+        const category = await ProductCategory.find(
+            {
+                deleted : false
+            }
+        );
+        const newCategory = createTreeHelper.treeProducts(category);
+
         const product = await Product.findOne(find);
         // console.log(product)
         res.render("admin/pages/products/edit.pug", {
             titlePage: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            category: newCategory
         })
     } catch (error) {
         req.flash("error", "Khong tim thay san pham")
