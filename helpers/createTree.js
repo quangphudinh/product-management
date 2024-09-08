@@ -1,8 +1,11 @@
+let count = 0;
 createTree = (arr , parentID = "") => {
     const tree = [];
     arr.forEach(item => {
         if(item.parent_id === parentID){
+            count++;
             const newItem = item;
+            newItem.index = count;
             const children = createTree(arr , item.id);
             if(children.length > 0){
                 newItem.children = children;
@@ -13,6 +16,7 @@ createTree = (arr , parentID = "") => {
     return tree;
 }
 module.exports.treeProducts = (arr , parentID = "") => {
+    count = 0;
     const tree = createTree(arr , parentID);
     return tree
 }

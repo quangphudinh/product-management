@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block main 
     +alert-error(5000)
@@ -7,7 +8,7 @@ block main
     h1(class="mb-4") Chỉnh sửa danh mục sản phẩm
     //- div #{product}
     form(
-        action=`${prefixAdmin}/product-category/edit/${product.id}?_method=PATCH`
+        action=`${prefixAdmin}/product-category/edit/${data.id}?_method=PATCH`
         id="form-edit-product"
         method="POST"
         enctype="multipart/form-data"
@@ -19,17 +20,19 @@ block main
                 class="form-control"
                 id="title"
                 name="title"
-                value=product.title
+                value=data.title
                 required
             )
         div(class="form-group")
             lable(for="parent_id") Danh mục cha
-            input(
-                type="text"
-                class="form-control"
-                id="parent_id"
+            select(
                 name="parent_id"
+                id="parent_id"
+                class="form-control"
             )
+                option(value="") -- Chọn danh mục cha --
+                if(record)
+                    +select-tree(record,1,data.parent_id)
         div(class="form-group")
             lable(for="desc") Mô tả
             textarea(
@@ -37,7 +40,7 @@ block main
                 id="desc"
                 name="description"
                 rows='5'
-            ) #{product.description}
+            ) #{data.description}
 
         div(
             class="form-group"
@@ -54,7 +57,7 @@ block main
             )
             div(class="form-group image-group")
                 img(
-                    src= product.thumbnail
+                    src= data.thumbnail
                     alt=""
                     upload-image-preview  
                     class="image-preview"  
@@ -70,7 +73,7 @@ block main
                 name="position"
                 placeholder="Tự động tăng"
                 min="1"
-                value= product.position
+                value= data.position
             )
         div(class="form-group form-check form-check-inline")
             input(
@@ -79,7 +82,7 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked=(product.status === "active" ? true : false)
+                checked=(data.status === "active" ? true : false)
             )
             label(for="statusActive" class="form-check-inline") Hoạt động
         div(class="form-group form-check form-check-inline")
@@ -89,7 +92,7 @@ block main
                 id="statusUnActive"
                 name="status"
                 value="unactive"
-                checked=(product.status === "unactive" ? true : false)
+                checked=(data.status === "unactive" ? true : false)
             )
             label(for="statusUnActive" class="form-check-inline") Dừng hoạt động
         div(class="form-group")

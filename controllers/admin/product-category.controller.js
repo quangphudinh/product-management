@@ -129,7 +129,6 @@ module.exports.create = async (req, res) => {
         deleted: false
     }
 
-
     const record = await ProductCategory.find(find);
     const newRecords = createTreeHelper.treeProducts(record);
 
@@ -164,11 +163,20 @@ module.exports.edit = async (req, res) => {
             deleted: false,
             _id: req.params.id
         }
-        const product = await ProductCategory.findOne(find);
+
+        const record = await ProductCategory.find(
+            {
+                deleted : false
+            }
+        );
+        const newRecords = createTreeHelper.treeProducts(record);
+
+        const data = await ProductCategory.findOne(find);
         // console.log(product)
         res.render("admin/pages/product-category/edit.pug", {
             titlePage: "Chỉnh sửa danh mục",
-            product: product
+            data: data,
+            record: newRecords
         })
     } catch (error) {
         req.flash("error", "Khong tim thay danh mục san pham")

@@ -7,6 +7,10 @@ const productSchema = new mongoose.Schema(
     {
         title : String, //san pham 1
         description : String,
+        product_category_id : {
+            type : String,
+            default : ""
+        },
         price : Number,
         discountPercentage : Number,
         stock : Number,
