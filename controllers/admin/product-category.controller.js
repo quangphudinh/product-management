@@ -4,6 +4,8 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
+const createTreeHelper = require("../../helpers/createTree");
+
 // [GET] /admin/product-category
 module.exports.index = async (req, res) => {
     //Đoạn bộ lọc
@@ -26,11 +28,11 @@ module.exports.index = async (req, res) => {
     }
 
      //phần phân trang - pagination
-     const countProducts = await ProductCategory.countDocuments(find);
-     let objectPagination = paginationHelper({
-         limitItem: 4,
-         currentPage: 1
-     }, req.query, countProducts)
+    //  const countProducts = await ProductCategory.countDocuments(find);
+    //  let objectPagination = paginationHelper({
+    //      limitItem: 4,
+    //      currentPage: 1
+    //  }, req.query, countProducts)
 
     // Sort
     let sort = {};
@@ -43,14 +45,17 @@ module.exports.index = async (req, res) => {
 
     const records = await ProductCategory.find(find)
         .sort(sort)
-        .limit(objectPagination.limitItem)
-        .skip(objectPagination.skip);
+        // .limit(objectPagination.limitItem)
+        // .skip(objectPagination.skip);
+    
+    const newRecords = createTreeHelper.treeProducts(records);
+
     res.render("admin/pages/product-category/index.pug", {
         titlePage: "Danh mục sản phẩm",
-        records: records,
+        records: newRecords,
         filterStatus: filterStatus,
         keyword: objectSearch.keyword,
-        pagination: objectPagination
+        // pagination: objectPagination
     })
 }
 
@@ -120,8 +125,17 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admin/product-category/create
 module.exports.create = async (req, res) => {
+    let find = {
+        deleted: false
+    }
+
+
+    const record = await ProductCategory.find(find);
+    const newRecords = createTreeHelper.treeProducts(record);
+
     res.render("admin/pages/product-category/create.pug", {
-        titlePage: "Tạo danh mục sản phẩm"
+        titlePage: "Tạo danh mục sản phẩm",
+        record: newRecords
     })
 }
 
