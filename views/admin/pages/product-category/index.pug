@@ -8,66 +8,69 @@ include ../../mixins/sortCategory.pug
 include ../../mixins/table-tree.pug
 
 block main
-    +alert-success(5000)
-    h1 Trang Danh Mục Sản Phẩm
+    if(role.permissions.includes("products-category_view"))
+        +alert-success(5000)
+        h1 Trang Danh Mục Sản Phẩm
 
-    .card.mb-3 
-        .card-header Bộ lọc và Tìm kiếm
-        .card-body
-            .row
-                .col-6
-                   +filter-status(filterStatus) 
-                .col-6
-                    +search(keyword) 
-    .card.mb-3 
-        .card-header Sắp xếp
-        .card-body 
-            .row 
-                .rol-4 
-                    +sortCategory()              
+        .card.mb-3 
+            .card-header Bộ lọc và Tìm kiếm
+            .card-body
+                .row
+                    .col-6
+                    +filter-status(filterStatus) 
+                    .col-6
+                        +search(keyword) 
+        .card.mb-3 
+            .card-header Sắp xếp
+            .card-body 
+                .row 
+                    .rol-4 
+                        +sortCategory()              
 
-    .card.mb-3 
-        .card-header Danh mục
-        .card-body
-            .row 
-                .col-8
-                    +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
-                .col-4 
-                    a(
-                        href=`${prefixAdmin}/product-category/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
+        .card.mb-3 
+            .card-header Danh mục
+            .card-body
+                .row 
+                    .col-8
+                        if(role.permissions.includes("products-catagory_edit")) 
+                            +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
+                    .col-4
+                        if(role.permissions.includes("products-category_create")) 
+                            a(
+                                href=`${prefixAdmin}/product-category/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
 
-            table(
-                    class="table table-hover table-sm"
-                    checkbox-multi
+                table(
+                        class="table table-hover table-sm"
+                        checkbox-multi
+                    )
+                        thead 
+                            tr 
+                                th 
+                                    input(type="checkbox" name="checkall")
+                                th STT 
+                                th Hinh Anh 
+                                th Tieu de 
+                                th Vi Tri
+                                th Trang Thai 
+                                th Hoat Dong 
+                        tbody 
+                            +table-tree(records)
+                //- +pagination(pagination)
+
+                form(
+                    action=""
+                    method="POST"
+                    id="form-change-status"
+                    data-path=`${prefixAdmin}/product-category/change-status`
                 )
-                    thead 
-                        tr 
-                            th 
-                                input(type="checkbox" name="checkall")
-                            th STT 
-                            th Hinh Anh 
-                            th Tieu de 
-                            th Vi Tri
-                            th Trang Thai 
-                            th Hoat Dong 
-                    tbody 
-                        +table-tree(records)
-            //- +pagination(pagination)
 
-            form(
-                action=""
-                method="POST"
-                id="form-change-status"
-                data-path=`${prefixAdmin}/product-category/change-status`
-            )
+                form(
+                    action=""
+                    method="POST"
+                    id="form-delete-item"
+                    data-path=`${prefixAdmin}/product-category/delete`
+                ) 
 
-            form(
-                action=""
-                method="POST"
-                id="form-delete-item"
-                data-path=`${prefixAdmin}/product-category/delete`
-            ) 
-
-            script(src="/admin/js/product.js") 
+                script(src="/admin/js/product.js") 
