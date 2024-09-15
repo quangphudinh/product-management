@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('express-flash');
+const moment = require('moment');
 
 
 
@@ -44,6 +45,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 // Variables Globales
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment; // thư viện chuyển đổi date thành chuỗi or chuỗi thành date
 
 //Routes
 routes(app);

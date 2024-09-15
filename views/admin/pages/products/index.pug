@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block main
     if(role.permissions.includes("products_view")) 
@@ -49,12 +50,13 @@ block main
                             th 
                                 input(type="checkbox" name="checkall")
                             th STT 
-                            th Hinh Anh 
-                            th Tieu de 
-                            th Gia 
-                            th Vi Tri
-                            th Trang Thai 
-                            th Hoat Dong 
+                            th Hình Ảnh 
+                            th Tiêu Đề
+                            th Giá
+                            th Vị Trí
+                            th Trạng Thái
+                            th Người Tạo 
+                            th Hoạt Động
                     tbody 
                         each item, index in products
                             tr
@@ -111,6 +113,11 @@ block main
                                                 data-status= item.status
                                                 class= 'badge badge-danger'
                                             ) Dừng hoạt động
+                                
+                                td 
+                                    p #{item.accountFullName}
+                                    p 
+                                        +formatDateTime(item.createdBy.createdAt)
                                 td 
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}` 
