@@ -116,8 +116,12 @@ block main
                                 
                                 td 
                                     p #{item.accountFullName}
-                                    p 
-                                        +formatDateTime(item.createdBy.createdAt)
+                                    if(item.createdBy.createAt)
+                                        p 
+                                            +formatDateTime(item.createdBy.createdAt)
+                                    else 
+                                        p 
+                                            +formatDateTime(item.createdAt)
                                 td 
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}` 

@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema(
         createdBy : {
             account_id : String,
             createdAt : {
-                type : Date,
+                type : String,
                 default : Date.now
             }
         },
@@ -33,7 +33,11 @@ const productSchema = new mongoose.Schema(
             type : Boolean,
             default : false
         },
-        deletedAt : Date
+        // deletedAt : Date
+        deletedBy : {
+            account_id : String,
+            deletedAt : Date
+        }
     } ,{
         timestamps : true
     }
