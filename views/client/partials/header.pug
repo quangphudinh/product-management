@@ -1,3 +1,4 @@
+include ../mixins/sub-menu.pug
 header.header
     .container 
         .row.align-items-center 
@@ -10,6 +11,11 @@ header.header
                 .inner-menu 
                     ul 
                         li 
-                            a(href='/') Trang Chu 
-                        li 
-                            a(href='/products') San Pham
+                            a(href='/') Trang Chủ 
+                        li(class="sub-menu")
+                            -const pathProduct = "/products"
+                            a(href=pathProduct) Sản Phẩm
+                            +sub-menu(layoutProdutsCategory ,pathProduct)
+                            
+
+            
