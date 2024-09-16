@@ -1,0 +1,80 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    
+    h1(class="mb-4") Cập nhật thông tin cá nhân
+    +alert-error(5000)
+    +alert-success(5000)
+   
+    form(
+        action=`${prefixAdmin}/my-account/edit/?_method=PATCH`
+        method="POST"
+        enctype="multipart/form-data"
+    ) 
+        div(class="form-group")
+            lable(for="fullName") Họ tên *
+            input(
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+                value=user.fullName
+                required
+            )
+        div(class="form-group")
+            lable(for="email") Email *
+            input(
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                value=user.email
+            )
+        div(class="form-group")
+            lable(for="password") Mật khẩu
+            input(
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+            )
+        div(class="form-group")
+            lable(for="phone") Số điện thoại
+            input(
+                type="phone"
+                class="form-control"
+                id="phone"
+                name="phone"
+                value=user.phone
+            )
+
+        div(
+            class="form-group"
+            upload-image
+        )
+            lable(for="avatar") Ảnh
+            input(
+                type="file"
+                class="form-control-file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+                upload-image-input
+            )
+            div(class="form-group image-group")
+                img(
+                    src= user.avatar
+                    alt=""
+                    upload-image-preview  
+                    class="image-preview"  
+                )
+                button(class="btn btn-close" remove-image-upload) x
+            
+        
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Cập nhật
+    
