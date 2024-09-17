@@ -187,6 +187,19 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+    // kiểm tra để phòng bị đổi dự liệu từ postman
+    /*
+        const permissions = res.locals.user.permissions;
+        if(!permissions.includes("product-create")){
+            req.flash("error", "Bạn không có quyền truy cập");
+            return res.redirect("back");
+        }
+        else {
+            //chạy đoạn code ở phía dưới
+        }
+        //làm tương tự với các tính năng khác vào các tính năng post patch delete
+    */
+    
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
