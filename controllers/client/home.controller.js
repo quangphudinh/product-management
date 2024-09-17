@@ -9,11 +9,18 @@ module.exports.index = async (req, res) => {
         featured: "1",
         status: "active"
     })
-
-    const newProducts = productsHelper.priceNewProducts(productsFeatured);
+    const newproductsFeatured = productsHelper.priceNewProducts(productsFeatured);
     
+    //Lấy ra sản phẩm mới nhất
+    const productsNew = await Product.find({
+        deleted: false,
+        status: "active",  
+    }).sort({position : "desc"}).limit(6); //lấy ra tối đa 4 phần tử
+    const newProductsNew = productsHelper.priceNewProducts(productsNew);
+
     res.render('client/pages/home/index.pug', {
         titlePage: "Trang Chu",
-        newProducts : newProducts
+        productsFeatured : newproductsFeatured,
+        productsNew : newProductsNew
     })
 }
