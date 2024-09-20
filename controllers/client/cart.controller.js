@@ -1,11 +1,41 @@
 const Cart = require('../../models/cart.model')
+const Product = require('../../models/product.model')
+const productsHelper = require('../../helpers/products.js')
+//[GET]/cart
+module.exports.index = async (req, res) => {
+    const cartId = req.cookies.cartId
+    const cart = await Cart.findOne({
+        _id: cartId
+    })
+    
+    if(cart.products.length > 0){
+        for(const item of cart.products){
+            const productId = item.product_id;
+            const productInfor = await Product.findOne({
+                _id: productId,
+                deleted: false,
+                status: "active"
+            }).select("title thumbnail slug price discountPercentage")
+
+            productInfor.priceNew = productsHelper.priceNewProduct(productInfor);
+            item.productInfor = productInfor;
+            item.totalPrice = item.productInfor.priceNew * item.quantity
+        }
+        cart.cartTotalPrice = cart.products.reduce((total, item) => total + item.totalPrice, 0);
+    }
+
+    res.render('client/pages/cart/index.pug', {
+        titlePage: "Giỏ hàng",
+        cartDetail : cart
+    })
+}
 //[POST] /cart/add/productId
 module.exports.add = async (req, res) => {
     const productId = req.params.productId
     const quantity = parseInt(req.body.quantity)
     const cartId = req.cookies.cartId
 
-    console.log(productId, quantity, cartId)
+    // console.log(productId, quantity, cartId)
 
     const cart = await Cart.findOne({
         _id: cartId
