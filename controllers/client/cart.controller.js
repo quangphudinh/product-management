@@ -72,3 +72,21 @@ module.exports.add = async (req, res) => {
     req.flash("success", "Them san pham vao gio hang thanh cong")
     res.redirect("back")
 }
+//[GET] /cart/delete/:productId
+module.exports.delete = async (req, res) => {
+    const productId = req.params.productId
+    const cartId = req.cookies.cartId
+
+    await Cart.updateOne(
+        {
+            _id: cartId
+        },
+        {
+            $pull: { products: { product_id: productId } }
+        })
+    
+
+    console.log(productId , cartId)
+    req.flash("success", "Xoa san pham thanh cong")
+    res.redirect("back")
+}
