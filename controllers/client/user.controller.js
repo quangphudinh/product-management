@@ -1,9 +1,11 @@
 const User = require("../../models/user.model");
+const ForgotPassword = require("../../models/forgot-password.model");
 const md5 = require("md5");
+const generateHelper = require("../../helpers/generate");
 //[GET] /user/register
 module.exports.register = (req, res) => {
     res.render('client/pages/user/register.pug',{
-        pageTitle : "Đăng ký tài khoản"
+        titlePage : "Đăng ký tài khoản"
     });
 }
 
@@ -29,7 +31,7 @@ module.exports.registerPost =  async (req, res) => {
 //[GET] /user/login
 module.exports.login = (req, res) => {
     res.render('client/pages/user/login.pug',{
-        pageTitle : "Đăng nhâp"
+        titlePage : "Đăng nhâp"
     });
 }
 
@@ -62,4 +64,39 @@ module.exports.loginPost =  async (req, res) => {
 module.exports.logout = (req, res) => {
     res.clearCookie('tokenUser');
     res.redirect("/")
+}
+
+// [GET] /user/password/forgot
+module.exports.forgotPassword = async (req, res) => {
+    res.render('client/pages/user/forgot-password.pug', {
+        titlePage: 'Lấy lại mật khẩu'
+    })
+}
+
+// [POST] /user/password/forgot
+module.exports.forgotPasswordPost = async (req, res) => {
+    const email = req.body.email
+
+    const user = await User.findOne({
+        email: email,
+        deleted: false
+    })
+
+    if(!user) {
+        req.flash('error', 'Email không tồn tại');
+        return res.redirect('back');
+    }
+
+    // Lưu thông tin vào DB
+    const otp = generateHelper.generateRandomNumber(4)
+    const objectForgotPassword = {
+        email : email,
+        OPT : otp,
+        expireAt : Date.now()
+    }
+    const forgotPassword = new ForgotPassword(objectForgotPassword)
+    await forgotPassword.save()
+    // nếu tồn tại email thì gửi mã OTP qua email
+
+    res.send('ok')
 }
