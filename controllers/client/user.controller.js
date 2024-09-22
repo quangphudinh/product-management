@@ -25,3 +25,35 @@ module.exports.registerPost =  async (req, res) => {
 
     res.redirect("/")
 }
+
+//[GET] /user/login
+module.exports.login = (req, res) => {
+    res.render('client/pages/user/login.pug',{
+        pageTitle : "Đăng nhâp"
+    });
+}
+
+//[POST] /user/login
+module.exports.loginPost =  async (req, res) => {
+    const {email , password} = req.body
+    const user = await User.findOne({
+        email: email,
+        deleted: false
+    })
+
+    if(!user) {
+        req.flash('error', 'Email đã tồn tại');
+        return res.redirect('back');
+    }
+    if(md5(password) !== user.password) {
+        req.flash('error', 'Mật khẩu không đúng');
+        return res.redirect('back');
+    }
+    if(user.status == "unactive") {
+        req.flash('error', 'Tài khoản đang bị khoá');
+        return res.redirect('back');
+    }
+
+    res.cookie('tokenUser', user.tokenUser);
+    res.redirect("/")
+}
