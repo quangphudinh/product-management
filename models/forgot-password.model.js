@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const forgotPasswordSchema = new mongoose.Schema(
     {
         email : String,
-        OPT : String,
+        OTP : String,
         expireAt : { // tự động xóa sau 180s
             type : Date,
-            expires : 180
+            expires : 500
         }
     } ,{
         timestamps : true
