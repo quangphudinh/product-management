@@ -50,9 +50,12 @@ app.locals.moment = moment; // thư viện chuyển đổi date thành chuỗ
 //Routes
 routes(app);
 routesAdmin(app);
-
-
-
+app.get("*", (req, res) => {
+  res.render("client/pages/errors/404.pug" ,{
+      pageTitle : "404 Not Found"
+    }
+  )
+})
 
 app.listen(port , () => {
   console.log(`Example app listening at http://localhost:${port}`)
