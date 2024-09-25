@@ -1,6 +1,7 @@
 const categoryMiddlewares = require('../../middlewares/client/category.middlewares');
 const cartMiddlewares = require('../../middlewares/client/cart.middlewares');
 const userMiddlewares = require('../../middlewares/client/user.middlewares');
+const settingMiddlewares = require('../../middlewares/client/setting.middleware');
 
 const productRoutes = require('./product.route');
 const homeRoutes = require('./home.route');
@@ -13,6 +14,7 @@ module.exports = (app) => {
     app.use(categoryMiddlewares.category); //viết dòng này để sử dụng middleware cho tất cả route
     app.use(cartMiddlewares.CartID);
     app.use(userMiddlewares.inforUser);
+    app.use(settingMiddlewares.settingGeneral);
 
     app.use('/', homeRoutes);
     app.use('/products',productRoutes); 
