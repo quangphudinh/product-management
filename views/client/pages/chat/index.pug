@@ -14,20 +14,12 @@ block main
                 //- .inner-avatar EV
                 //- .inner-name Em
                 .inner-body 
-                    .inner-incoming 
-                        .inner-name Concac 
-                        .inner-content 
-                            | Chim sex goi dai bang , daij ban nghe rox tra loi 
-                    .inner-outgoing 
-                        .inner-content 
-                            | Dai ban nghe rox !! 
-                    .inner-incoming 
-                        .inner-name Concac 
-                        .inner-content 
-                            | Ha Loi hom nay co bien a    
-                    .inner-outgoing 
-                        .inner-content 
-                            | mmmmmmmmmm !! 
+                    each chat in chats
+                        div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
+                            if(chat.user_id != user.id)
+                                .inner-name #{chat.inforUser.fullName}
+                            .inner-content 
+                                | #{chat.content}
                 .inner-foot 
                     form(
                         class= "inner-form"

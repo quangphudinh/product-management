@@ -270,6 +270,7 @@
 
     .chat .inner-outgoing .inner-content {
         width: 40%;
+        color: #ffffff;
         border: 1px solid #ffffff;
         background-color: #FE5DA3;
         border-radius: 10px;
