@@ -239,3 +239,68 @@
     }
 }
 /* End show alert */
+
+/* Chat */
+
+    .chat {
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+    }
+    .chat .inner-incoming  .inner-name{
+        font-size: 18px;
+        font-weight: 600;
+
+    } 
+    .chat .inner-incoming .inner-content {
+        width: 40%;
+        border: 1px solid #ccc;
+        background-color: #c5c1c1;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 5px;
+
+    } 
+    .chat .inner-outgoing {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    .chat .inner-outgoing .inner-content {
+        width: 40%;
+        border: 1px solid #ffffff;
+        background-color: #FE5DA3;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 5px;
+    } 
+
+    .chat .inner-foot {
+        border-top: 1px solid #ccc;
+        padding: 10px;
+    }
+    .chat .inner-form {
+        display: flex;
+        align-items: center;
+    }
+    .chat .inner-form input {
+        flex: 1;
+        height: 32px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 0 15px;
+        outline: none;
+    }
+    .chat .inner-form button {
+        border-radius: 15px;
+        border: 1px solid #FE5DA3;
+        background: #FE5DA3;
+        color: #fff;
+        height: 32px;
+        padding: 0 15px;
+        cursor: pointer;
+    }
+/* End Chat */

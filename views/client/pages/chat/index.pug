@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+
+block main
+    .container.my-3
+        .row 
+            .col-12 
+                +box-head("Chat")
+
+        .row
+            .col-12 
+             .chat 
+                //- .inner-head
+                //- .inner-avatar EV
+                //- .inner-name Em
+                .inner-body 
+                    .inner-incoming 
+                        .inner-name Concac 
+                        .inner-content 
+                            | Chim sex goi dai bang , daij ban nghe rox tra loi 
+                    .inner-outgoing 
+                        .inner-content 
+                            | Dai ban nghe rox !! 
+                    .inner-incoming 
+                        .inner-name Concac 
+                        .inner-content 
+                            | Ha Loi hom nay co bien a    
+                    .inner-outgoing 
+                        .inner-content 
+                            | mmmmmmmmmm !! 
+                .inner-foot 
+                    form(
+                        class= "inner-form"
+                        action=""
+                    )
+                        input(
+                            type="text"
+                            placeholder="Nhập nội dung..."
+                            name="content"
+                        )
+                        button
+                            i.fa-solid.fa-paper-plane
+                        

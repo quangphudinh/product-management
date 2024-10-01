@@ -8,6 +8,9 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const flash = require('express-flash');
 const moment = require('moment');
+//socketio
+const http = require('http');
+const { Server } = require("socket.io");
 
 
 
@@ -23,6 +26,16 @@ database.connect();
 
 const app = express()
 const port = process.env.PORT //lay PORT = 3000
+
+//SocketIO
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id);
+});
+//end-socketio
+//End SocketIO
 
 app.use(methodOverride('_method'));
 
@@ -57,6 +70,9 @@ app.get("*", (req, res) => {
   )
 })
 
-app.listen(port , () => {
+// app.listen(port , () => {
+//   console.log(`Example app listening at http://localhost:${port}`)
+// });
+server.listen(port , () => {
   console.log(`Example app listening at http://localhost:${port}`)
 });
