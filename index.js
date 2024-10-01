@@ -30,10 +30,8 @@ const port = process.env.PORT //lay PORT = 3000
 //SocketIO
 const server = http.createServer(app);
 const io = new Server(server);
+global._io = io;
 
-io.on('connection', (socket) => {
-  console.log('a user connected', socket.id);
-});
 //end-socketio
 //End SocketIO
 

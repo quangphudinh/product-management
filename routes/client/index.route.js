@@ -2,6 +2,7 @@ const categoryMiddlewares = require('../../middlewares/client/category.middlewar
 const cartMiddlewares = require('../../middlewares/client/cart.middlewares');
 const userMiddlewares = require('../../middlewares/client/user.middlewares');
 const settingMiddlewares = require('../../middlewares/client/setting.middleware');
+const authMiddleware = require('../../middlewares/client/auth.middlewares');
 
 const productRoutes = require('./product.route');
 const homeRoutes = require('./home.route');
@@ -23,5 +24,5 @@ module.exports = (app) => {
     app.use("/cart", cartRoutes);
     app.use("/checkout", checkoutRoutes);
     app.use("/user", userRoutes);
-    app.use("/chat", chatRoutes);
+    app.use("/chat",authMiddleware.requireAuth,chatRoutes); //router pirvate
 }
