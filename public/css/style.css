@@ -312,3 +312,13 @@
         cursor: pointer;
     }
 /* End Chat */
+
+/* Emoji Icon */
+.tooltip {
+    visibility: hidden;
+}
+.tooltip.shown {
+    visibility: visible;
+    opacity: 1;
+}
+/* End Emoji Icon */
