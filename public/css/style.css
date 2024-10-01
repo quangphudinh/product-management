@@ -247,6 +247,13 @@
         border: 1px solid #ccc;
         border-radius: 15px;
     }
+
+    .chat .inner-body{
+        padding: 10px;
+        max-height: 450px;
+        overflow-y: auto;
+    }
+
     .chat .inner-incoming  .inner-name{
         font-size: 18px;
         font-weight: 600;
