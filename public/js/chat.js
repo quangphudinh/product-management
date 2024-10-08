@@ -1,6 +1,11 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 
+
+//- file-upload-with-preview
+// const upload = new FileUploadwithPreview.FileUploadWithPreview('my-unique-id');
+
 //CLIENT_SEND_MESSAGE
+
 const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
     formSendData.addEventListener('submit', (e) => {
